@@ -7,16 +7,29 @@
 
     let blobs = [];
 
+    const PIXELSIZE = 4;
 
 
     drawPixels =function(){
-        context.fillStyle = "black";
-        context.fillRect (0,0, canvas.width, canvas.height);
-        context.fillStyle = "white";
-        for(var i = 0; i < blobs.length; i++){   
-             context.beginPath();
-            context.arc(blobs[i].position.x, blobs[i].position.y, blobs[i].radius,0, 2*Math.PI);
-            context.fill();
+        for(var i = 0; i < canvas.width; i += PIXELSIZE){      
+            for(var j = 0; j < canvas.height; j += PIXELSIZE){  
+                var sum = 0
+                var pixelposition = new Vector(i, j)
+                for(var k = 0; k< blobs.length; k += 1){
+                    var d = Vector.DistanceSquared (pixelposition, blobs[k].position);
+                    sum += blobs[k].radius/d
+                    
+                }
+                var hue = sum * 10000;
+                if (hue>340){
+                    hue = 340;
+                }
+                if (hue <50){
+                    hue/=1.01;
+                }
+                context.fillStyle = "hsl(" + hue +",100%, 50%)";
+                context.fillRect (i,j, PIXELSIZE, PIXELSIZE);
+            }      
         }
 
     }
