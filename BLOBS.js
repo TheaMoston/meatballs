@@ -1,3 +1,6 @@
+const MINRADIUS = 40;
+const RADIUSVARIATION = 80;
+
 class Blob{
     constructor (x,y){
         this.position = new Vector (x,y);
@@ -5,7 +8,7 @@ class Blob{
         var Velocityy = Math.random()-0.5;
         this.velocity = new Vector (Velocityx,Velocityy);
         this.velocity = Vector.Scale (this.velocity,5);
-        this.radius = Math.random()*50+40;
+        this.radius = Math.random() * RADIUSVARIATION + MINRADIUS;
     
     }
 
