@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<canvas id="canvas" width="600" height="400"></canvas>
+
+<script>
+
+    let blobs = [];
+
+
+
+    drawPixels =function(){
+        context.fillStyle = "black";
+        context.fillRect (0,0, canvas.width, canvas.height);
+        context.fillStyle = "white";
+        for(var i = 0; i < blobs.length; i++){   
+             context.beginPath();
+            context.arc(blobs[i].position.x, blobs[i].position.y, blobs[i].radius,0, 2*Math.PI);
+            context.fill();
+        }
+
+    }
+
+    gameLoop = function(){
+        drawPixels();
+        for(var i = 0; i < blobs.length; i++){        
+            blobs[i].update(canvas.width, canvas.height);
+        }
+    }
+
+    window.onload = function(){
+        canvas = document.getElementById("canvas");
+        context = canvas.getContext("2d");
+        context.fillStyle = "black";
+        context.fillRect (0,0, canvas.width, canvas.height);
+
+        for(var i = 0; i<10; i++){
+            var x = Math.random()*canvas.width;
+            var y = Math.random()*canvas.height;
+            var newBlob = new Blob(x,y);
+            
+            blobs.push(newBlob);
+        }
+
+        var loop = setInterval(gameLoop,1000/30);
+    }
+</script>
+
+<script src="BLOBS.js"> </script>
+<script src="vector.js"> </script>
+
+</html>
